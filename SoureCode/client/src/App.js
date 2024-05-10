@@ -4,6 +4,7 @@ import HeaderComponent from "./components/HeaderComponent";
 import HomePage from "./pages/HomePage";
 import Login from "./pages/Login";
 import MenuComponent from "./components/MenuComponent";
+import NotFound from "./pages/NotFound";
 
 function App() {
 
@@ -37,6 +38,7 @@ function App() {
             <Route path="/home" element={user ? <HomePage /> : <Navigate to="/login" />} />
 
             <Route path="/login" element={user ? <Navigate to="/home" /> : <Login onLogin={handleLogin} />} />
+            <Route path="*" element={user ?  <NotFound/> : <Navigate to="/login" />} />
 
           </Routes>
         </div>

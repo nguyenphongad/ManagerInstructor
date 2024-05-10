@@ -31,7 +31,7 @@ const HeaderComponent = ({ user }) => {
     return (
         <div className='header_container'>
             <div className='logo_image'>
-                <img src={logo} alt="logo" />
+                <a href="/" ><img src={logo} alt="logo" /></a>
             </div>
             <div className='right_line_header'>
                 <div className='account_dropdown' onClick={() => setDropBoxAccount(!dropBoxAccount)}>
