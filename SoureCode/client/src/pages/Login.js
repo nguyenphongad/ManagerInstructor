@@ -3,31 +3,17 @@ import brg from '../assets/images/bgr.jpg'
 import logo from '../assets/images/logo.png'
 import { FaUser } from "react-icons/fa";
 import { FaLock } from "react-icons/fa";
-import { Link, useNavigate } from 'react-router-dom';
-const Login = ({ onLogin }) => {
-
-    const ARRAY_LIST = [
-        {
-            firstname: "Phong",
-            lastname: "Nguyen",
-            username: "GV000",
-            password: "123123",
-            isRole: 0
-        },
-        {
-            firstname: "Quyen",
-            lastname: "Nguyen",
-            username: "GV123",
-            password: "123123",
-            isRole: 1
-        }
-    ];
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { message } from 'antd'
+import { ARRAY_LIST } from '../DATA_TEST';
 
 
+const Login = ({ onLogin, user123 }) => {
+
+    const [messageApi, contextHolder] = message.useMessage();
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
     const navigate = useNavigate();
 
     const handleLogin = (e) => {
@@ -36,14 +22,25 @@ const Login = ({ onLogin }) => {
         const user = ARRAY_LIST.find(item => item.username === username && item.password === password);
 
         if (user) {
-            localStorage.setItem('user', JSON.stringify(user));
-            onLogin(user);
-            // navigate("/") ? console.log("oke") : console.log("chưa")
+            if (user.isWork) {
+                onLogin(user);
+                navigate("/");
+            }else{
+                messageApi.open({
+                    type: 'error',
+                    content: 'Giảng viên đã nghỉ, không thể đăng nhập',
+                });
+            }
+
         } else {
-            alert('Tên đăng nhập hoặc mật khẩu không chính xác.');
+            messageApi.open({
+                type: 'error',
+                content: 'Tên đăng nhập hoặc mật khẩu không chính xác',
+            });
         }
     };
 
+    if (user123) return <Navigate to="/" />;
 
 
     return (
@@ -90,6 +87,7 @@ const Login = ({ onLogin }) => {
                     </div>
                 </div>
             </div>
+            {contextHolder}
         </div>
     )
 }

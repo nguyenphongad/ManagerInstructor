@@ -23,8 +23,8 @@ const HeaderComponent = ({ user }) => {
     });
 
     const handleLogout = () => {
-        localStorage.removeItem('user'); 
-        window.location.reload(); 
+        localStorage.removeItem('user');
+        window.location.href = '/';
     };
 
 
@@ -34,16 +34,21 @@ const HeaderComponent = ({ user }) => {
                 <a href="/" ><img src={logo} alt="logo" /></a>
             </div>
             <div className='right_line_header'>
+                <div className={`render_role ${user.isRole === 0 ? "admin_role" : "gv_role"}`}>
+                    {user.isRole == 0 ? "ADMIN" : "GIẢNG VIÊN"}
+                </div>
+
+
                 <div className='account_dropdown' onClick={() => setDropBoxAccount(!dropBoxAccount)}>
-                    <img src={avt_df} alt="defaut_avata" className='avt_df'/>
+                    <img src={avt_df} alt="defaut_avata" className='avt_df' />
                     <div className='name_user_header'>
-                        <div>{user.firstname} {user.lastname}</div>
+                        <div> {user.firstname} {user.lastname}</div>
                         <div>MGV : {user.username}</div>
                     </div>
                 </div>
-                <div className={`box_drop_account ${dropBoxAccount ? "active_drop_box" : "unactive_drop_box"}`}  ref={refBoxAccount}>
+                <div className={`box_drop_account ${dropBoxAccount ? "active_drop_box" : "unactive_drop_box"}`} ref={refBoxAccount}>
                     <div className='item_select_acc'>
-                    <MdManageAccounts />
+                        <MdManageAccounts />
                         <div className='text_sl_acc'>Cập nhật thông tin</div>
                     </div>
                     <div className='item_select_acc' onClick={handleLogout}>

@@ -1,50 +1,46 @@
-import React, { useEffect, useState } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
-import HeaderComponent from "./components/HeaderComponent";
+import React, { useCallback, useEffect, useState } from "react";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import Login from "./pages/Login";
-import MenuComponent from "./components/MenuComponent";
 import NotFound from "./pages/NotFound";
+import ForumPage from "./pages/ForumPage";
+import MyPostPage from "./pages/MyPostPage";
+import DocumentPage from "./pages/DocumentPage";
+import AboutUsPage from "./pages/AboutUsPage";
+import Layout from "./components/Layout";
 
 function App() {
 
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem('user'));
-    if (storedUser) {
-      setUser(storedUser);
-    }
-  }, []);
-
-
+  const [user, setUser] = useState(() => {
+    const storedUser = localStorage.getItem('user');
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
   const handleLogin = (user) => {
-    setUser(user); // Cập nhật user vào state khi đăng nhập thành công
+    setUser(user);
+    localStorage.setItem('user', JSON.stringify(user));
   };
 
+
   return (
-    <div>
-      {user ? <HeaderComponent user={user}/> : ""}
-      <div className="body_container">
-      {
-        user ?  <div>
-          <MenuComponent />
-        </div> : ""
-      }
+    <>
+      <Routes>
 
-        <div className="body_page" style={user ? {width: "calc( 100% - 250px )"} :  {width:"100%"}}>
-          <Routes>
-            <Route path="/" element={user ? <Navigate to="/home" /> : <Navigate to="/login" />} />
-            <Route path="/home" element={user ? <HomePage /> : <Navigate to="/login" />} />
+        <Route path="/login" element={<Login onLogin={handleLogin} user123={user}/>} />
+        <Route path="*" element={<Navigate to="/login" />} />
 
-            <Route path="/login" element={user ? <Navigate to="/home" /> : <Login onLogin={handleLogin} />} />
-            <Route path="*" element={user ?  <NotFound/> : <Navigate to="/login" />} />
+        <Route path="/" element={user ? <Layout user={user} /> : <Login onLogin={handleLogin} />}>
+          {user?.isRole === 0 ? <Route index path="/manager" element={<HomePage />} /> : ""}
+          <Route index path="/forum" element={<ForumPage />} />
+          <Route index element={user?.isRole === 0 ? <Navigate to="/manager"/> : <Navigate to="/forum"/>}/>
+          <Route path="/my-post" element={<MyPostPage />} />
+          <Route path="/document" element={<DocumentPage />} />
+          <Route path="/about-us" element={<AboutUsPage />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
 
-          </Routes>
-        </div>
-      </div>
 
-    </div>
+      </Routes>
+    </>
   );
 }
 

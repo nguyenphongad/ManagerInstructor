@@ -6,6 +6,8 @@
     display: flex;
     justify-content: space-between;
     padding: 10px;
+    position: sticky;
+    top: 0px;
 
     .logo_image {
         img {
@@ -17,10 +19,27 @@
     .right_line_header {
         display: flex;
 
+
+        .render_role {
+            padding: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            margin-right: 20px;
+            color: #fff;
+            border-radius: 10px;
+        }
+        .admin_role{
+            background-color: #c21313;
+        }
+        .gv_role{
+            background-color: #0a8bf7;
+        }
+
         .account_dropdown {
             display: flex;
             position: relative;
             cursor: pointer;
+            user-select: none;
 
             .avt_df {
                 width: 42px;
@@ -54,6 +73,8 @@
             right: 10px;
             padding: 10px;
             border-radius: 10px;
+            border: 1px solid #dfdcdc;
+            z-index: 33;
 
             >div:hover {
                 background-color: #f1f1f1;
@@ -67,12 +88,14 @@
                 padding: 15px 15px;
                 cursor: pointer;
                 border-radius: 10px;
-                svg{
+
+                svg {
                     font-size: 28px;
                     margin-right: 10px;
                     color: #0a8bf7;
                 }
-                .text_sl_acc{
+
+                .text_sl_acc {
                     font-size: 19px;
                     font-weight: 600;
                 }

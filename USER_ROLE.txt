@@ -1,0 +1,11 @@
+admin (cấp cao nhất) : 
+	username: GV000000
+	password: 123123
+
+giang vien (cấp thấp)
+	username: GV123456
+	password: 123123
+
+giang vien (cấp thấp) (nghỉ làm ko đăng nhập được)
+	username : GV121212
+	password : 123123
